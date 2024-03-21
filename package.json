@@ -21,6 +21,9 @@
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev"
   },
+  "prisma": {
+    "schema": "src/entity/schema.prisma"
+  },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
