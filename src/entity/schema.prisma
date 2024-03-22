@@ -22,10 +22,17 @@ model Book {
   authors   AuthorsOnBooks[]
 }
 
+enum TagName {
+  FICTION
+  NONFICTION
+  SCIENCE
+  ESSAY
+}
+
 model Tag {
-  id     Int    @id @default(autoincrement())
-  name   String
-  book   Book   @relation(fields: [bookId], references: [id])
+  id     Int     @id @default(autoincrement())
+  name   TagName
+  book   Book    @relation(fields: [bookId], references: [id])
   bookId Int
 }
 
@@ -36,12 +43,9 @@ model Author {
 }
 
 model AuthorsOnBooks {
-  book       Book     @relation(fields: [bookId], references: [id])
-  bookId     Int // relation scalar field (used in the `@relation` attribute above)
-  Author     Author   @relation(fields: [authorId], references: [id])
-  authorId   Int // relation scalar field (used in the `@relation` attribute above)
-  assignedAt DateTime @default(now())
-  assignedBy String
-
-  @@id([bookId, authorId])
+  id       Int    @id @default(autoincrement())
+  book     Book   @relation(fields: [bookId], references: [id])
+  bookId   Int // relation scalar field (used in the `@relation` attribute above)
+  Author   Author @relation(fields: [authorId], references: [id])
+  authorId Int // relation scalar field (used in the `@relation` attribute above)
 }
