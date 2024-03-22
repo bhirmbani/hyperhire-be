@@ -7,9 +7,11 @@ const prisma = new PrismaClient();
 async function main() {
   const booksResult = await prisma.book.createMany({ data: bookMocks });
   const authorsResult = await prisma.author.createMany({ data: authorMocks });
-  const authorsOnBooks = [];
-  const tags = [];
-  for (let i = 1; i < 101; i++) {
+
+  let authorsOnBooks = [];
+  let tags = [];
+
+  function generateTagsAndAuthorsBooks(index) {
     const tag = {} as Tag;
     const fiction = 'FICTION';
     const nonfiction = 'NONFICTION';
@@ -23,21 +25,41 @@ async function main() {
     };
     const random = Math.floor(Math.random() * 4);
     tag.name = obj[random];
-    tag.bookId = i;
+    tag.bookId = index;
     tags.push(tag);
 
     const data = {} as AuthorsOnBooks;
     data.authorId = faker.number.int({ min: 1, max: 100 });
-    data.bookId = i;
+    data.bookId = index;
     authorsOnBooks.push(data);
   }
-  const authorsOnBooksResult = await prisma.authorsOnBooks.createMany({
+
+  for (let j = 1; j < 101; j++) {
+    generateTagsAndAuthorsBooks(j);
+  }
+
+  await prisma.authorsOnBooks.createMany({
     data: authorsOnBooks,
   });
-  const tagsResult = await prisma.tag.createMany({
+  await prisma.tag.createMany({
     data: tags,
   });
-  console.log({ tagsResult, booksResult, authorsResult, authorsOnBooksResult });
+
+  authorsOnBooks = [];
+  tags = [];
+
+  for (let j = 1; j < 101; j++) {
+    generateTagsAndAuthorsBooks(j);
+  }
+
+  await prisma.authorsOnBooks.createMany({
+    data: authorsOnBooks,
+  });
+  await prisma.tag.createMany({
+    data: tags,
+  });
+
+  console.log({ booksResult, authorsResult });
 }
 main()
   .then(async () => {
