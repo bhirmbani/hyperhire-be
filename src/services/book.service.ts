@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Book } from '@prisma/client';
-import { BookRepository } from 'src/repositories/book';
+import { Book, TagName } from '@prisma/client';
+import { BookRepository } from 'src/repositories/book.repositories';
 
 @Injectable()
 export class BookService {
@@ -8,5 +8,27 @@ export class BookService {
 
   getBooks(): Promise<Book[]> {
     return this.bookRepository.books({});
+  }
+
+  getBooksByAuthor(authorId: string): Promise<Book[]> {
+    return this.bookRepository.booksByAuthorId({
+      authorId: parseInt(authorId),
+    });
+  }
+
+  getBooksByTag({ name }: { name: string }): Promise<Book[]> {
+    const splitted = name.split(',');
+    const tags = splitted as TagName[];
+    return this.bookRepository.booksByTagName({ tagName: tags });
+  }
+
+  getBooksByPoint({ min, max }: { min: string; max: string }): Promise<Book[]> {
+    return this.bookRepository.booksByPoint({
+      point: { min: parseInt(min), max: parseInt(max) },
+    });
+  }
+
+  getBooksByTitle({ name }: { name: string }): Promise<Book[]> {
+    return this.bookRepository.booksByTitle({ name });
   }
 }
