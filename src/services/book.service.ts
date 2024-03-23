@@ -6,8 +6,11 @@ import { BookRepository } from 'src/repositories/book.repositories';
 export class BookService {
   constructor(private readonly bookRepository: BookRepository) {}
 
-  getBooks(): Promise<Book[]> {
-    return this.bookRepository.books({});
+  getBooks(query: { skip: string; take: string }): Promise<Book[]> {
+    return this.bookRepository.books({
+      skip: parseInt(query.skip),
+      take: parseInt(query.take),
+    });
   }
 
   getBooksByAuthor(authorId: string): Promise<Book[]> {

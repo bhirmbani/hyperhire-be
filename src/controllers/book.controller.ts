@@ -7,8 +7,8 @@ export class BookController {
   constructor(private readonly bookService: BookService) {}
 
   @Get()
-  getBooks(): Promise<Book[]> {
-    return this.bookService.getBooks();
+  getBooks(@Query() query: { skip: string; take: string }): Promise<Book[]> {
+    return this.bookService.getBooks(query);
   }
 
   @Get('/author/:authorId')
