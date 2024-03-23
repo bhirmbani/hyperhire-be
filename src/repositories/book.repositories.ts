@@ -20,7 +20,7 @@ export class BookRepository {
       cursor,
       where,
       include: {
-        tags: {
+        Tag: {
           select: {
             id: true,
             name: true,
@@ -57,7 +57,7 @@ export class BookRepository {
         },
       },
       include: {
-        tags: {
+        Tag: {
           select: {
             id: true,
             name: true,
@@ -87,7 +87,7 @@ export class BookRepository {
       take,
       cursor,
       where: {
-        tags: {
+        Tag: {
           some: {
             name: {
               in: tagName,
@@ -96,7 +96,7 @@ export class BookRepository {
         },
       },
       include: {
-        tags: {
+        Tag: {
           select: {
             id: true,
             name: true,
@@ -132,7 +132,7 @@ export class BookRepository {
         },
       },
       include: {
-        tags: {
+        Tag: {
           select: {
             id: true,
             name: true,
@@ -168,7 +168,7 @@ export class BookRepository {
         },
       },
       include: {
-        tags: {
+        Tag: {
           select: {
             id: true,
             name: true,

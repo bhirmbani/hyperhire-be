@@ -18,12 +18,10 @@ model Book {
   title     String
   cover_img String
   point     Int
-  tags      Tag[]
+  Tag       Tag[]
   authors   AuthorsOnBooks[]
-  Cart      Cart?            @relation(fields: [cartId], references: [id])
-  cartId    Int?
-  Order     Order?           @relation(fields: [orderId], references: [id])
-  orderId   Int?
+  Order     Order[]
+  Cart      Cart[]
 }
 
 enum TagName {
@@ -55,24 +53,22 @@ model AuthorsOnBooks {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  username String  @unique
+  id       Int    @id @default(autoincrement())
+  username String @unique
   password String
-  cart     Cart?
-  order    Order[]
 }
 
 model Cart {
-  id       Int    @id @default(autoincrement())
-  user     User   @relation(fields: [username], references: [username])
-  username String @unique
-  books    Book[]
+  id     Int   @id @default(autoincrement())
+  userId Int?
+  bookId Int?
+  Book   Book? @relation(fields: [bookId], references: [id])
 }
 
 model Order {
-  id          Int    @id @default(autoincrement())
-  books       Book[]
+  id          Int   @id @default(autoincrement())
   total_point Int
-  User        User?  @relation(fields: [userId], references: [id])
   userId      Int?
+  bookId      Int?
+  Book        Book? @relation(fields: [bookId], references: [id])
 }

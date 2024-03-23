@@ -33,9 +33,6 @@ export class UserRepository {
           password: user.password,
         },
       },
-      include: {
-        cart: true,
-      },
     });
   }
 }
