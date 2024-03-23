@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { Cart } from '@prisma/client';
+import { AddBookToCartDTO } from 'src/dto/cart.dto';
 import { CartService } from 'src/services/cart.service';
 
 @Controller('/cart')
@@ -12,9 +13,7 @@ export class CartController {
   }
 
   @Post('/book')
-  addBookToCart(
-    @Body() payload: { bookId: string; userId: string },
-  ): Promise<Cart> {
+  addBookToCart(@Body() payload: AddBookToCartDTO): Promise<Cart> {
     return this.cartService.addBookToCart(payload);
   }
 

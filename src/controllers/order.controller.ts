@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { Order } from '@prisma/client';
+import { CancelOrderDTO, CreateOrderDTO, PayOrderDTO } from 'src/dto/order.dto';
 import { OrderService } from 'src/services/order.service';
 
 @Controller('/order')
@@ -12,14 +13,14 @@ export class OrderController {
   }
 
   @Post()
-  createOrder(@Body() payload: { userId: string }): Promise<Order> {
+  createOrder(@Body() payload: CreateOrderDTO): Promise<Order> {
     return this.orderService.createOrder(payload);
   }
 
   @Put('/cancel/:orderId')
   cancelOrder(
     @Param('orderId') orderId: string,
-    @Body() payload: { userId: string },
+    @Body() payload: CancelOrderDTO,
   ): Promise<Order> {
     return this.orderService.cancelOrder(orderId, payload.userId);
   }
@@ -27,7 +28,7 @@ export class OrderController {
   @Put('/pay/:orderId')
   payOrder(
     @Param('orderId') orderId: string,
-    @Body() payload: { userId: string },
+    @Body() payload: PayOrderDTO,
   ): Promise<Order> {
     return this.orderService.payOrder(orderId, payload.userId);
   }
