@@ -14,7 +14,9 @@ export class UserService {
       username: user.username,
     });
     if (!foundUser) {
-      return await this.userRepository.createUser({ user });
+      return await this.userRepository.createUser({
+        user: { ...user, point: 100 },
+      });
     } else {
       throw new BadRequestException('username already registered');
     }

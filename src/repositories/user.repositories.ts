@@ -16,7 +16,7 @@ export class UserRepository {
   }
 
   async createUser(params: {
-    user: { username: string; password: string };
+    user: { username: string; password: string; point: number };
   }): Promise<User> {
     const { user } = params;
     return this.prisma.user.create({ data: user });
@@ -32,6 +32,30 @@ export class UserRepository {
         AND: {
           password: user.password,
         },
+      },
+    });
+  }
+
+  async findByUserId(params: { userId: number }): Promise<User> {
+    const { userId } = params;
+    return this.prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+  }
+
+  async updateUserPoint(params: {
+    userId: number;
+    point: number;
+  }): Promise<User> {
+    const { userId, point } = params;
+    return this.prisma.user.update({
+      data: {
+        point,
+      },
+      where: {
+        id: userId,
       },
     });
   }

@@ -17,12 +17,18 @@ export class OrderController {
   }
 
   @Put('/cancel/:orderId')
-  cancelOrder(@Param('orderId') orderId: string): Promise<Order> {
-    return this.orderService.cancelOrder(orderId);
+  cancelOrder(
+    @Param('orderId') orderId: string,
+    @Body() payload: { userId: string },
+  ): Promise<Order> {
+    return this.orderService.cancelOrder(orderId, payload.userId);
   }
 
   @Put('/pay/:orderId')
-  payOrder(@Param('orderId') orderId: string): Promise<Order> {
-    return this.orderService.payOrder(orderId);
+  payOrder(
+    @Param('orderId') orderId: string,
+    @Body() payload: { userId: string },
+  ): Promise<Order> {
+    return this.orderService.payOrder(orderId, payload.userId);
   }
 }

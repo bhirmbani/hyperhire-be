@@ -1,12 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { BooksOnOrders, Order, OrderStatus } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
+import { GetOrderByUserIdType } from 'src/type';
 
 @Injectable()
 export class OrderRepositories {
   constructor(private prisma: PrismaService) {}
 
-  async getOrderByUserId(params: { userId: number }): Promise<Order[]> {
+  async getOrderByUserId(params: {
+    userId: number;
+  }): Promise<GetOrderByUserIdType[]> {
     const { userId } = params;
     return this.prisma.order.findMany({
       where: {
@@ -17,6 +20,7 @@ export class OrderRepositories {
           select: {
             Book: {
               include: {
+                Tag: true,
                 Authors: {
                   include: {
                     Author: true,
