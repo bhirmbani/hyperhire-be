@@ -26,7 +26,7 @@ export class BookRepository {
             name: true,
           },
         },
-        authors: {
+        Authors: {
           select: {
             Author: true,
           },
@@ -50,7 +50,7 @@ export class BookRepository {
       take,
       cursor,
       where: {
-        authors: {
+        Authors: {
           some: {
             authorId: authorId,
           },
@@ -63,7 +63,7 @@ export class BookRepository {
             name: true,
           },
         },
-        authors: {
+        Authors: {
           select: {
             Author: true,
           },
@@ -102,7 +102,7 @@ export class BookRepository {
             name: true,
           },
         },
-        authors: {
+        Authors: {
           select: {
             Author: true,
           },
@@ -138,7 +138,7 @@ export class BookRepository {
             name: true,
           },
         },
-        authors: {
+        Authors: {
           select: {
             Author: true,
           },
@@ -174,7 +174,7 @@ export class BookRepository {
             name: true,
           },
         },
-        authors: {
+        Authors: {
           select: {
             Author: true,
           },

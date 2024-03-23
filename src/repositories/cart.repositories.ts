@@ -38,4 +38,13 @@ export class CartRepositories {
       },
     });
   }
+
+  async clearUserCart(params: { userId: number }): Promise<{ count: number }> {
+    const { userId } = params;
+    return this.prisma.cart.deleteMany({
+      where: {
+        userId,
+      },
+    });
+  }
 }

@@ -18,7 +18,7 @@ export class CartController {
     return this.cartService.addBookToCart(payload);
   }
 
-  @Delete('/book/:cartId')
+  @Delete('/:cartId')
   removeBookFromCart(@Param('cartId') cartId: string): Promise<Cart> {
     return this.cartService.removeBookFromCart(cartId);
   }
