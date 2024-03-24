@@ -59,4 +59,16 @@ export class UserRepository {
       },
     });
   }
+
+  async getUserPoint(params: { userId: number }): Promise<Pick<User, 'point'>> {
+    const { userId } = params;
+    return this.prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+      select: {
+        point: true,
+      },
+    });
+  }
 }

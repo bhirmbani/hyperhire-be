@@ -30,4 +30,15 @@ export class UserService {
       throw new BadRequestException('username or password wrong');
     }
   }
+
+  async getUserPoint(userId): Promise<Pick<User, 'point'>> {
+    const correctUser = await this.userRepository.getUserPoint({
+      userId: parseInt(userId),
+    });
+    if (correctUser) {
+      return correctUser;
+    } else {
+      throw new BadRequestException('username or password wrong');
+    }
+  }
 }

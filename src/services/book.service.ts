@@ -7,10 +7,12 @@ export class BookService {
   constructor(private readonly bookRepository: BookRepository) {}
 
   getBooks(query: { skip: string; take: string }): Promise<Book[]> {
-    return this.bookRepository.books({
+    const pagination = {
       skip: parseInt(query.skip),
       take: parseInt(query.take),
-    });
+    };
+    const payload = query.skip || query.take ? pagination : {};
+    return this.bookRepository.books(payload);
   }
 
   getBooksByAuthor(authorId: string): Promise<Book[]> {
